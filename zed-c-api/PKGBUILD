@@ -1,0 +1,43 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=zed-c-api
+pkgver=3.6.4
+pkgrel=1
+epoch=
+pkgdesc="ZED C API"
+arch=('x86_64')
+url="https://github.com/stereolabs/zed-c-api"
+license=('Proprietary')
+groups=()
+depends=('zed-sdk')
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('https://github.com/stereolabs/zed-c-api/archive/refs/tags/v3.6.tar.gz')
+sha256sums=('3eed2358042a46800b53df5b43dcfa5ed2860805a82fedba69fa6173d8220e13')
+noextract=()
+validpgpkeys=()
+
+build() {
+  cd "$srcdir"
+  
+  mkdir -p build && cd build
+  cmake ../zed-c-api-3.6/
+  make
+}
+
+package() {
+  cd "$srcdir/build"
+  make DESTDIR="$pkgdir/" install
+}

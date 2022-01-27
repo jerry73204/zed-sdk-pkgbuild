@@ -1,0 +1,54 @@
+# This is an example PKGBUILD file. Use this as a start to creating your own,
+# and remove these comments. For more information, see 'man PKGBUILD'.
+# NOTE: Please fill out the license field for your package! If it is unknown,
+# then please put 'unknown'.
+
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=zed-sdk
+pkgver=3.6.4
+pkgrel=1
+pkgdesc="ZED software development kit"
+arch=('x86_64')
+url="https://www.stereolabs.com/developers/release/"
+license=('Proprietary')
+depends=()
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=('https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.6/ZED_SDK_Ubuntu20_cuda11.5_v3.6.4.run'
+        'https://github.com/stereolabs/zed-c-api/archive/refs/tags/v3.6.tar.gz'
+        'Camera.hpp.patch'
+        'zed-config.cmake.patch')
+sha256sums=('49a785253eec49639e1b05f6fe90e4f92c6fd127e8fd596fa5f00b8645dcb986'
+            '3eed2358042a46800b53df5b43dcfa5ed2860805a82fedba69fa6173d8220e13'
+            '3d9e62716505d9597f2e4adf60b3175fd5eefb7c8503a2b69005037239225ba4'
+            '66448f239dfc2c99336980d54fbc89ab7b379c243aa69780cc57a7e339e8f92b')
+noextract=()
+validpgpkeys=()
+
+prepare() {
+    cd "$srcdir"
+    dd if='ZED_SDK_Ubuntu20_cuda11.5_v3.6.4.run' of=zed-sdk.tar.gz ibs=14971 skip=1 status=none
+
+    rm -rf zed-sdk
+    mkdir -p zed-sdk
+    tar -xf zed-sdk.tar.gz -C zed-sdk
+
+    cd zed-sdk
+    patch -p1 -i "$srcdir/Camera.hpp.patch"
+    patch -p1 -i "$srcdir/zed-config.cmake.patch"
+}
+
+package() {
+    mkdir -p "$pkgdir"/{usr/local,etc/udev/rules.d,etc/ld.so.conf.d}
+    cp -r "$srcdir/zed-sdk" "$pkgdir/usr/local/zed"
+    mv "$pkgdir/usr/local/zed/zed.conf" "$pkgdir/etc/ld.so.conf.d/zed.conf"
+    mv "$pkgdir/usr/local/zed/99-slabs.rules" "$pkgdir/etc/udev/rules.d/99-slabs.rules"
+}

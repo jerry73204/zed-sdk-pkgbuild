@@ -1,0 +1,43 @@
+--- a/zed-config.cmake	2022-01-18 01:22:48.000000000 +0800
++++ b/zed-config.cmake	2022-01-27 22:35:16.421943336 +0800
+@@ -34,7 +34,7 @@
+     endif()
+ 
+     find_package(BLAS REQUIRED)
+-    set (LIB_PATH_64 "/usr/lib/${CMAKE_SYSTEM_PROCESSOR}-linux-gnu/")
++    set (LIB_PATH_64 "/usr/lib/")
+ 
+     set (ZED_LIBRARIES_DEBUG "/usr/local/zed/lib/libsl_zedd.so")
+     set (ZED_LIBRARIES_STATIC_DEBUG  "/usr/local/zed/lib/libsl_zed_staticd.a")
+@@ -71,7 +71,7 @@
+ 
+     find_package(CUDA 11  REQUIRED)
+     if(CUDA_FOUND)
+-        set(CUDA_PATH "/usr/local/cuda-${CUDA_VERSION_MAJOR}.${CUDA_VERSION_MINOR}/lib64/")
++        set(CUDA_PATH "/opt/cuda/lib64/")
+ 
+         set(CUBLAS_STATIC_PATH "${CUDA_PATH}libcublas_static.a")
+         exec_program(find ARGS "${CUDA_PATH} -type f -name libcublas_static.a" OUTPUT_VARIABLE CUBLAS_STATIC_PRESENT) 
+@@ -100,7 +100,7 @@
+     endif()
+ 
+     if (USE_CUVID)
+-    	find_library(NVENCODEAPI_LIB nvidia-encode HINTS "/usr/lib/${CMAKE_SYSTEM_PROCESSOR}-linux-gnu/")
++    	find_library(NVENCODEAPI_LIB nvidia-encode HINTS "/usr/lib/")
+         if (NVENCODEAPI_LIB)
+             set(ZED_LIBRARIES ${ZED_LIBRARIES} ${NVENCODEAPI_LIB})
+         endif()
+@@ -111,11 +111,11 @@
+     endif()
+ 
+     if (USE_CUVID)
+-        exec_program(find ARGS "/usr/lib/${CMAKE_SYSTEM_PROCESSOR}-linux-gnu/ -type f -name libnvcuvid*" OUTPUT_VARIABLE CUVID_LIBRARY) ##Try first path
++        exec_program(find ARGS "/usr/lib/ -type f -name libnvcuvid*" OUTPUT_VARIABLE CUVID_LIBRARY) ##Try first path
+         if(NOT CUVID_LIBRARY)
+ 	        exec_program(find ARGS "/usr/lib/ -type f -name libnvcuvid*" OUTPUT_VARIABLE CUVID_LIBRARY) ##Try second path
+         endif()
+-        find_library(NVENCODEAPI_LIB nvidia-encode HINTS "/usr/lib/${CMAKE_SYSTEM_PROCESSOR}-linux-gnu/")
++        find_library(NVENCODEAPI_LIB nvidia-encode HINTS "/usr/lib/")
+         set(ZED_STATIC_DEP_LIBRARIES ${ZED_STATIC_DEP_LIBRARIES} ${CUVID_LIBRARY} ${NVENCODEAPI_LIB})
+         ## CUVID is used in desktop version.
+     else()

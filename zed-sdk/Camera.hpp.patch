@@ -1,0 +1,11 @@
+--- a/include/sl/Camera.hpp	2022-01-18 01:22:48.000000000 +0800
++++ b/include/sl/Camera.hpp	2022-01-27 22:33:59.751939848 +0800
+@@ -74,7 +74,7 @@
+ #include <fstream>
+ #include <iomanip>
+ #include <iostream>
+-#include <memory.h>
++#include <memory>
+ #include <mutex>
+ #include <sstream>
+ #include <thread>
