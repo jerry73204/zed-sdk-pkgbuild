@@ -23,11 +23,9 @@ options=()
 install=
 changelog=
 source=('https://stereolabs.sfo2.cdn.digitaloceanspaces.com/zedsdk/3.6/ZED_SDK_Ubuntu20_cuda11.5_v3.6.4.run'
-        'https://github.com/stereolabs/zed-c-api/archive/refs/tags/v3.6.tar.gz'
         'Camera.hpp.patch'
         'zed-config.cmake.patch')
 sha256sums=('49a785253eec49639e1b05f6fe90e4f92c6fd127e8fd596fa5f00b8645dcb986'
-            '3eed2358042a46800b53df5b43dcfa5ed2860805a82fedba69fa6173d8220e13'
             '3d9e62716505d9597f2e4adf60b3175fd5eefb7c8503a2b69005037239225ba4'
             '66448f239dfc2c99336980d54fbc89ab7b379c243aa69780cc57a7e339e8f92b')
 noextract=()
